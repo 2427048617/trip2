@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=yes">
+  <title>呼和浩特文旅惠民卡</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", PingFang SC, sans-serif;
+    }
+    body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+    /* 单页通用样式 手机全屏 */
+    .h5-page {
+      width: 100%;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    /* 标题区域 */
+    .page-title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .page-title h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .divider {
+      width: 50px;
+      height: 3px;
+      border-radius: 2px;
+      margin: 0 auto;
+    }
+    /* 内容卡片 */
+    .content-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
+    }
+    /* 按钮通用样式 */
+    .oper-btn {
+      width: 100%;
+      padding: 16px 0;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      margin: 10px 0;
+      cursor: pointer;
+      border: none;
+    }
+    /* 主题色定义 */
+    .color-green { color: #2E8B57; }    /* 草原绿 */
+    .color-blue { color: #1E88E5; }     /* 天空蓝 */
+    .color-gold { color: #DAA520; }     /* 大漠金 */
+    .color-red { color: #D32F2F; }      /* 提醒红 */
+    .bg-green { background-color: #2E8B57; }
+    .bg-blue { background-color: #1E88E5; }
+    .bg-gold { background-color: #DAA520; }
+    .bg-light1 { background-color: #F8FAFC; }
+    .bg-light2 { background-color: #FFF9E8; }
+    .bg-light3 { background-color: #F0F8F3; }
+    .bg-light4 { background-color: #F7FAF0; }
+    .bg-light5 { background-color: #F0F7FF; }
+    .bg-light6 { background-color: #FFF8E8; }
+    .text-normal {
+      font-size: 15px;
+      line-height: 1.9;
+      color: #333333;
+    }
+    .text-tip {
+      font-size: 14px;
+      color: #666666;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 第1页 封面页 草原蓝天渐变 -->
+<div class="h5-page" style="background: linear-gradient(160deg, #1E88E5 0%, #2E8B57 100%); color: #fff; padding-top: 100px; text-align: center;">
+  <h1 style="font-size: 32px; text-shadow: 0 2px 8px rgba(0,0,0,0.2); margin-bottom: 16px;">呼和浩特文旅惠民卡</h1>
+  <p style="font-size: 20px; opacity: 0.95; margin-bottom: 20px;">🏮 一卡在手 · 畅游青城 🏮</p >
+  <p style="font-size: 16px; opacity: 0.9; margin-bottom: 100px;">敕勒川草原 · 大青山麓 · 黄河明珠</p >
+  <div class="divider" style="background: #DAA520;"></div>
+  <p style="font-size: 16px; opacity: 0.85; margin-top: 80px;">全年免票畅玩<br>省钱又省心</p >
+</div>
+<script>console.log("【埋点】page01_cover 封面页");</script>
+
+<!-- 第2页 产品简介 政府背书 -->
+<div class="h5-page bg-light1">
+  <div class="page-title">
+    <h2 class="color-green">政府惠民工程 · 青城献礼</h2>
+    <div class="divider bg-gold"></div>
+  </div>
+  <div class="content-card" style="border-left: 4px solid #DAA520;">
+    <p class="text-normal" style="text-indent: 2em; margin-bottom: 16px;">
+      呼和浩特文旅惠民卡，由呼和浩特市政府正式批准，市文旅广电局、总工会、人社局、工商联四部门联合打造，是面向全体市民与游客的专属惠民福利。
+    </p >
+    <p class="text-normal" style="text-indent: 2em;">
+      本项目立足敕勒川、大青山、黄河文化，由内蒙古旅游行业协会监制，内蒙古智慧文旅有限公司发行运营，官方认证，安全可靠。
+    </p >
+  </div>
+  <p style="text-align: center; font-size: 13px; color: #666; margin-top: 40px;">🐎 青城文旅 · 品质保障 🐎</p >
+</div>
+<script>console.log("【埋点】page02_intro 产品简介页");</script>
+
+<!-- 第3页 覆盖范围 呼包鄂乌四城 -->
+<div class="h5-page" style="background: #ffffff;">
+  <div class="page-title">
+    <h2 class="color-blue">🌍 联动四城 · 玩转青城周边</h2>
+    <div class="divider bg-gold"></div>
+  </div>
+  <div class="content-card" style="background: #F0F7FF;">
+    <p class="text-normal" style="margin-bottom: 16px;">
+      📍 覆盖区域：<strong class="color-blue">呼和浩特、包头、鄂尔多斯、乌兰察布</strong>四大盟市
+    </p >
+    <p class="text-normal" style="margin-bottom: 16px;">
+      🎡 核心景点：老牛湾、敕勒川草原、大青山等近40家A级景区、影院、温泉、非遗体验项目
+    </p >
+    <p class="text-normal">
+      草原风光、黄河峡谷、蒙元文化、休闲娱乐一站式全覆盖。
+    </p >
+  </div>
+</div>
+<script>console.log("【埋点】page03_area 覆盖范围页");</script>
+
+<!-- 第4页 超值性价比 价格权益 -->
+<div class="h5-page bg-light2">
+  <div class="page-title">
+    <h2 class="color-gold">💰 百元畅玩 · 纵享青城</h2>
+    <div class="divider bg-green"></div>
+  </div>
+  <div class="content-card">
+    <div style="padding: 12px 0; border-bottom: 1px dashed #eee; margin-bottom: 12px;">
+      <p class="text-normal">官方原价：<span style="text-decoration: line-through; color: #666;">200元/年</span></p >
+      <p class="text-normal" style="margin: 8px 0;">政府补贴：立减100元</p >
+      <p style="font-size: 22px; font-weight: bold; color: #DAA520; margin: 8px 0;">✅ 到手价：仅需 100元/年</p >
+    </div>
+    <div style="padding: 12px 0; border-bottom: 1px dashed #eee; margin-bottom: 12px;">
+      <p class="text-normal">💎 综合权益总价值：<strong class="color-green" style="font-size: 18px;">3000元+</strong></p >
+    </div>
+    <div style="padding: 12px 0;">
+      <p class="text-normal">⏳ 使用时长：激活后<strong class="color-blue">365天</strong>长效有效</p >
+      <p class="text-tip" style="margin-top: 8px;">畅玩青城四季美景，景区不限次游玩</p >
+    </div>
+  </div>
+</div>
+<script>console.log("【埋点】page04_price 权益页");</script>
+
+<!-- 第5页 四大分类权益 -->
+<div class="h5-page bg-light3">
+  <div class="page-title">
+    <h2 class="color-green">🎪 四大权益 · 玩转青城</h2>
+    <div class="divider bg-gold"></div>
+  </div>
+  <div style="display: grid; gap: 12px;">
+    <div class="content-card" style="border-left: 3px solid #2E8B57;">
+      <p style="font-size: 17px; font-weight: bold; color: #2E8B57; margin-bottom: 6px;">🌿 景区免票</p >
+      <p class="text-tip">敕勒川、老牛湾、大青山等近40家景区免费入园</p >
+    </div>
+    <div class="content-card" style="border-left: 3px solid #1E88E5;">
+      <p style="font-size: 17px; font-weight: bold; color: #1E88E5; margin-bottom: 6px;">🎬 影院折扣</p >
+      <p class="text-tip">青城多家影院专属观影优惠</p >
+    </div>
+    <div class="content-card" style="border-left: 3px solid #DAA520;">
+      <p style="font-size: 17px; font-weight: bold; color: #DAA520; margin-bottom: 6px;">👨‍👩‍👧 亲子研学</p >
+      <p class="text-tip">草原科普、蒙元文化、自然探索体验</p >
+    </div>
+    <div class="content-card" style="border-left: 3px solid #795548;">
+      <p style="font-size: 17px; font-weight: bold; color: #795548; margin-bottom: 6px;">🏇 特色体验</p >
+      <p class="text-tip">温泉康养、非遗手作、草原风情体验</p >
+    </div>
+  </div>
+</div>
+<script>console.log("【埋点】page05_rights 分类权益页");</script>
+
+<!-- 第6页 适用人群 -->
+<div class="h5-page bg-light4">
+  <div class="page-title">
+    <h2 style="color: #558B2F;">🤝 全人群适配 · 畅游青城</h2>
+    <div class="divider bg-gold"></div>
+  </div>
+  <div class="content-card">
+    <p class="text-normal" style="margin-bottom: 12px;">🔹 <strong>本地市民</strong>：逛草原、游大青山，周末出游超省钱</p >
+    <p class="text-normal" style="margin-bottom: 12px;">🔹 <strong>都市上班族</strong>：拥抱自然，解压放松</p >
+    <p class="text-normal" style="margin-bottom: 12px;">🔹 <strong>学生党</strong>：研学青城文化，打卡网红景点</p >
+    <p class="text-normal" style="margin-bottom: 20px;">🔹 <strong>外地游客</strong>：一站式玩转呼和浩特及周边美景</p >
+    <div style="background: #FFF3E0; border-radius: 8px; padding: 12px; text-align: center;">
+      <p style="font-size: 16px; font-weight: bold; color: #E64A19;">📢 全国游客均可办理，畅游青城无界限！</p >
+    </div>
+  </div>
+</div>
+<script>console.log("【埋点】page06_user 人群页");</script>
+
+<!-- 第7页 使用指南 入园方式 -->
+<div class="h5-page bg-light5">
+  <div class="page-title">
+    <h2 class="color-blue">📱 三种入园 · 畅游青城</h2>
+    <div class="divider bg-gold"></div>
+  </div>
+  <div class="content-card">
+    <p style="padding: 10px 0; border-bottom: 1px solid #eee; font-size: 16px;">👉 方式一：刷身份证直接入园（青城全景区通用）</p >
+    <p style="padding: 10px 0; border-bottom: 1px solid #eee; font-size: 16px;">👉 方式二：微信扫描景区入园码，快速核验</p >
+    <p style="padding: 10px 0; font-size: 16px;">👉 方式三：打开智游青城小程序，手机刷码入园</p >
+  </div>
+  <div class="content-card" style="background: #FFFAF0; margin-top: 20px;">
+    <p class="text-normal">⚠️ 实名制卡片，<strong class="color-red">仅限本人使用</strong></p >
+    <p class="text-normal" style="margin-top: 8px;">⏱️ 激活当日起，<strong class="color-green">365天全程有效</strong></p >
+  </div>
+</div>
+<script>console.log("【埋点】page07_guide 使用指南");</script>
+
+<!-- 第8页 办理引导 核心转化页 -->
+<div class="h5-page" style="background: #ffffff;">
+  <div class="page-title">
+    <h2 class="color-blue">🚀 三步办理 · 即刻畅游青城</h2>
+    <div class="divider bg-gold"></div>
+  </div>
+  <div class="content-card" style="background: #F0F7FF;">
+    <p class="text-normal" style="margin-bottom: 10px;">1. 打开微信，搜索进入【智游青城】小程序</p >
+    <p class="text-normal" style="margin-bottom: 10px;">2. 在首页找到「文旅一卡通」专属入口</p >
+    <p class="text-normal">3. 填写实名信息，下单并完成激活</p >
+  </div>
+  <button class="oper-btn bg-blue" style="color: #fff;" onclick="console.log('【埋点】buy_button_click 点击立即办理');window.open('https://zmqcq.qingcheng0471.com/')">
+    ✅ 立即办理惠民卡
+  </button>
+  <button class="oper-btn bg-green" style="color: #fff;" onclick="console.log('【埋点】share_button_click 点击分享');alert('请点击微信右上角分享按钮')">
+    🔗 分享好友 · 共游青城
+  </button>
+</div>
+<script>console.log("【埋点】page08_buy 办理页");</script>
+
+<!-- 第9页 客服与常见问题 -->
+<div class="h5-page bg-light6">
+  <div class="page-title">
+    <h2 class="color-gold">📞 官方客服 · 青城服务</h2>
+    <div class="divider bg-green"></div>
+  </div>
+  <a href=" " class="oper-btn" style="background: #fff; color: #DAA520; border: 1px solid #DAA520;" onclick="console.log('【埋点】call_customer 拨打客服热线')">
+    📞 官方客服：400-071-0471
+  </a >
+  <div class="content-card">
+    <p class="text-normal" style="margin-bottom: 12px;">❓ 外地人可以办理惠民卡吗？<br>✅ 可以，本卡面向全国游客开放，无地域限制</p >
+    <p class="text-normal" style="margin-bottom: 12px;">❓ 卡片到期后如何续期？<br>✅ 激活后365天有效期，到期可在智游青城小程序直接续办</p >
+    <p class="text-normal">❓ 卡片可以多人共用吗？<br>✅ 实行实名制登记，仅限办卡本人使用，请勿转借</p >
+  </div>
+</div>
+<script>console.log("【埋点】page09_faq 客服页");</script>
+
+<!-- 第10页 封底页 收尾 -->
+<div class="h5-page" style="background: linear-gradient(180deg, #2E8B57 0%, #1F6F45 100%); color: #fff; text-align: center; padding-top: 60px;">
+  <h2 style="font-size: 22px; letter-spacing: 1px; margin-bottom: 20px;">🏔️ 一卡畅游四城 · 共赏青城风光 🏔️</h2>
+  <div class="divider" style="background: #DAA520; width: 70px;"></div>
+  <div style="margin: 30px 0; opacity: 0.9; font-size: 14px; line-height: 2;">
+    <p>联合推动单位</p >
+    <p>呼和浩特市文化旅游广电局 | 呼和浩特市总工会</p >
+    <p>呼和浩特市人社局 | 呼和浩特市工商业联合会</p >
+  </div>
+  <div style="margin-bottom: 60px; opacity: 0.9; font-size: 14px; line-height: 2;">
+    <p>监制：内蒙古旅游行业协会</p >
+    <p>发行运营：内蒙古智慧文旅有限公司</p >
+    <p style="margin-top: 10px;">敕勒川草原 · 黄河明珠 · 美丽青城</p >
+  </div>
+  <p style="font-size: 12px; opacity: 0.7;">© 2026 呼和浩特文旅惠民卡 · 青城献礼</p >
+</div>
+<script>console.log("【埋点】page10_end 封底页");</script>
+
+<!-- 微信分享全局配置 -->
+<script>
+  document.addEventListener('WeixinJSBridgeReady', function(){
+    wx.onMenuShareTimeline({
+      title: '呼和浩特文旅惠民卡 | 100元畅游敕勒川 & 大青山',
+      link: window.location.href
+    });
+    wx.onMenuShareAppMessage({
+      title: '呼和浩特文旅惠民卡',
+      desc: '一卡在手，玩转青城近40家景区！敕勒川、老牛湾、大青山全覆盖',
+      link: window.location.href
+    });
+  });
+</script>
+
+</body>
+</html>
