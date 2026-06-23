@@ -1,354 +1,826 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>呼和浩特文旅惠民卡</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Microsoft Yahei", sans-serif;
-        }
-        body {
-            background: #fff;
-            overflow: hidden;
-        }
-        /* 手机容器 固定尺寸375*667 */
-        .h5-wrap {
-            width: 375px;
-            height: 667px;
-            margin: 20px auto;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #eee;
-        }
-        /* 页面滑动容器 */
-        .page-container {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            transition: transform 0.6s ease;
-        }
-        /* 单页样式 */
-        .page {
-            width: 375px;
-            height: 667px;
-            padding: 30px 20px;
-            text-align: center;
-            position: relative;
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards;
-        }
-        /* 动画：淡入 + 向上滑动 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* 配色定义 */
-        :root {
-            --green: #2E8B57;    /* 草原绿 */
-            --blue: #4682B4;     /* 天空蓝 */
-            --gold: #DAA520;     /* 大漠金 */
-            --white: #ffffff;
-            --text: #333333;
-        }
-        /* 通用文字样式 */
-        .main-title {
-            font-size: 32px;
-            color: var(--gold);
-            font-weight: bold;
-            margin: 80px 0 20px;
-        }
-        .sub-title {
-            font-size: 20px;
-            color: var(--white);
-            margin-bottom: 30px;
-        }
-        .desc-text {
-            font-size: 16px;
-            line-height: 2;
-            color: var(--text);
-            margin: 15px 0;
-        }
-        .strong-text {
-            font-weight: bold;
-            font-size: 18px;
-            color: var(--green);
-        }
-        /* 卡片布局（权益页三列卡片） */
-        .card-box {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            margin-top: 40px;
-        }
-        .card {
-            width: 140px;
-            padding: 15px;
-            background: rgba(46, 139, 87, 0.1);
-            border-radius: 10px;
-            margin: 10px 0;
-        }
-        .card p {
-            margin-top: 8px;
-            font-size: 14px;
-        }
-        /* 按钮样式 */
-        .btn {
-            display: inline-block;
-            padding: 12px 35px;
-            background: var(--green);
-            color: #fff;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 16px;
-            margin-top: 30px;
-            cursor: pointer;
-            border: none;
-        }
-        .btn:hover {
-            background: #246b44;
-        }
-        /* 表单样式 */
-        .form-item {
-            margin: 20px 0;
-        }
-        .form-item input {
-            width: 280px;
-            height: 45px;
-            padding: 0 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        /* 分页指示器 */
-        .page-dot {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-        }
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #ccc;
-        }
-        .dot.active {
-            background: var(--green);
-        }
-        /* 单页背景区分 */
-        .page1 { background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url("https://picsum.photos/375/667?random=1") center/cover; color: #fff; }
-        .page2 { background: #f0f8f3; }
-        .page3 { background: #f0f7fc; }
-        .page4 { background: #fff; }
-        .page5 { background: #fffaf0; }
-        .page6 { background: #f0f8f3; }
-        .page7 { background: #f0f7fc; }
-        .page8 { background: #fff; }
-        .page9 { background: #f0f8f3; }
-        .page10 { background: #333; color: #fff; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0A1A14">
+<title>呼和浩特文旅惠民卡</title>
+<style>
+:root{
+  --ink:#06100c;
+  --deep:#0a1a14;
+  --green:#2d7d57;
+  --grass:#9dd7b6;
+  --ochre:#8b5e3c;
+  --sand:#d0b68b;
+  --white:#fff;
+  --vh:100vh;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--deep)}
+body{
+  font-family:"PingFang SC","Noto Sans SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+  color:var(--white);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+button,a{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+.V{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+.V::-webkit-scrollbar,.rail::-webkit-scrollbar,.benefit-list::-webkit-scrollbar{display:none}
+.S{
+  position:relative;
+  min-height:var(--vh);
+  height:var(--vh);
+  overflow:hidden;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  display:grid;
+  padding:clamp(42px,8vh,72px) clamp(18px,5vw,42px) clamp(18px,4vh,36px);
+  isolation:isolate;
+}
+.S::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  background:radial-gradient(rgba(255,255,255,.02) 1px,transparent 0);
+  background-size:26px 26px;
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.65),transparent 82%);
+}
+.nav{
+  position:fixed;
+  left:14px;
+  right:14px;
+  top:12px;
+  z-index:40;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  opacity:0;
+  transform:translateY(-120%);
+  transition:opacity .32s ease,transform .32s ease;
+  pointer-events:none;
+}
+.nav.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.brand-dot{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:rgba(255,255,255,.88)}
+.brand-dot i{width:8px;height:8px;border-radius:50%;background:var(--grass);box-shadow:0 0 0 5px rgba(157,215,182,.13)}
+.nav-links{display:flex;gap:5px;padding:4px;background:rgba(6,16,12,.32);backdrop-filter:blur(14px)}
+.nav-links a{
+  min-width:32px;
+  padding:6px 8px;
+  border:0;
+  text-decoration:none;
+  text-align:center;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+  color:rgba(255,255,255,.58);
+}
+.nav-links a.on{background:rgba(255,255,255,.14);color:#fff}
+.music{
+  position:fixed;
+  right:16px;
+  bottom:28px;
+  z-index:35;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(6,16,12,.42);
+  backdrop-filter:blur(14px);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition:transform .18s ease,background .18s ease;
+}
+.music:active,.tap:active{transform:scale(.92)}
+.music.on{background:rgba(45,125,87,.72)}
+.hint{
+  position:fixed;
+  left:50%;
+  bottom:30px;
+  z-index:20;
+  transform:translateX(-50%);
+  opacity:0;
+  transition:opacity .35s ease;
+  display:grid;
+  justify-items:center;
+  gap:6px;
+  pointer-events:none;
+}
+.hint.show{opacity:1}
+.hint i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.72);animation:float 1.8s ease-in-out infinite}
+.hint span{font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.45)}
+@keyframes float{50%{transform:translateY(7px);opacity:.35}}
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:84px;
+  z-index:70;
+  transform:translateX(-50%) translateY(12px);
+  max-width:86vw;
+  padding:10px 16px;
+  border-radius:999px;
+  background:rgba(6,16,12,.86);
+  backdrop-filter:blur(16px);
+  color:#fff;
+  font-size:12px;
+  line-height:1.4;
+  opacity:0;
+  pointer-events:none;
+  transition:.24s ease;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.reveal{opacity:0;transform:translateY(22px);filter:blur(8px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1),filter .7s ease}
+.S.on .reveal{opacity:1;transform:none;filter:none}
+.delay-1{transition-delay:.08s}.delay-2{transition-delay:.16s}.delay-3{transition-delay:.24s}
+
+/* Hero */
+#s1{
+  grid-template-rows:1fr auto;
+  background:
+    linear-gradient(180deg,rgba(4,10,8,.64),rgba(4,10,8,.12) 46%,rgba(4,10,8,.82)),
+    url("https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Great_Bend_of_Yellow_River_at_Laoniuwan.jpg/1280px-Great_Bend_of_Yellow_River_at_Laoniuwan.jpg") center 42%/cover no-repeat,
+    #0a1a14;
+}
+.hero-copy{align-self:end;padding-bottom:clamp(18px,5vh,42px)}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 12px;
+  margin-bottom:18px;
+  border-radius:999px;
+  background:rgba(255,255,255,.09);
+  color:rgba(255,255,255,.82);
+  font-size:12px;
+  line-height:1;
+  backdrop-filter:blur(10px);
+}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--grass)}
+h1{
+  max-width:7ch;
+  font-size:clamp(48px,14vw,74px);
+  line-height:.92;
+  letter-spacing:-.035em;
+  font-weight:900;
+  text-wrap:balance;
+}
+.lead{
+  max-width:34ch;
+  margin-top:14px;
+  color:rgba(255,255,255,.74);
+  font-size:14px;
+  line-height:1.8;
+  font-weight:400;
+}
+.hero-bottom{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:18px;
+  border-top:1px solid rgba(255,255,255,.12);
+  padding-top:14px;
+}
+.price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.price b{font-size:34px;line-height:1;font-weight:900;letter-spacing:-.035em}
+.price span{font-size:12px;color:rgba(255,255,255,.58)}
+.value-note{width:100%;font-size:11px;color:rgba(255,255,255,.42);line-height:1.4}
+.hero-actions{display:flex;gap:8px}
+.pill{
+  position:relative;
+  overflow:hidden;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:0 16px;
+  border-radius:999px;
+  border:0;
+  text-decoration:none;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+  transition:transform .18s ease,background .18s ease;
+}
+.pill.primary{background:#fff;color:var(--deep)}
+.pill.ghost{background:rgba(255,255,255,.1);color:#fff}
+
+/* Authority */
+#s2{
+  align-content:center;
+  gap:22px;
+  background:
+    radial-gradient(720px 520px at 18% 20%,rgba(111,168,197,.2),transparent 62%),
+    radial-gradient(520px 520px at 92% 84%,rgba(157,215,182,.18),transparent 58%),
+    linear-gradient(168deg,#0a1a14 0%,#123629 54%,#0b1711 100%);
+}
+.section-title{
+  font-size:clamp(32px,10vw,58px);
+  line-height:.98;
+  letter-spacing:-.035em;
+  font-weight:900;
+  text-wrap:balance;
+}
+.official-line{
+  max-width:28ch;
+  font-size:17px;
+  line-height:1.55;
+  color:rgba(255,255,255,.84);
+  font-weight:650;
+}
+.dept-row{display:flex;flex-wrap:wrap;gap:7px;max-width:360px}
+.dept-row span{
+  padding:7px 11px;
+  background:rgba(255,255,255,.08);
+  color:rgba(255,255,255,.78);
+  font-size:12px;
+  font-weight:700;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:1px;
+  background:rgba(255,255,255,.08);
+}
+.stats div{padding:13px 6px;text-align:center;background:rgba(255,255,255,.035)}
+.stats b{display:block;font-size:22px;line-height:1;font-weight:900;letter-spacing:-.03em}
+.stats span{display:block;margin-top:5px;font-size:10px;color:rgba(255,255,255,.42)}
+
+/* Scenic */
+#s3{
+  padding:0;
+  grid-template-rows:auto 1fr auto;
+  background:
+    radial-gradient(620px 520px at 16% 16%,rgba(208,182,139,.18),transparent 60%),
+    linear-gradient(168deg,#0e261d 0%,#1c422f 48%,#111f16 100%);
+}
+.s3-head{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  padding:48px 18px 8px;
+}
+.s3-head h2{font-size:18px;line-height:1;font-weight:900;letter-spacing:-.02em}
+.s3-head span{font-size:11px;color:rgba(255,255,255,.45)}
+.rail{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  gap:12px;
+  padding:8px 18px 14px;
+  align-items:center;
+  scrollbar-width:none;
+}
+.scene-card{
+  flex:0 0 80vw;
+  height:min(64vh,560px);
+  position:relative;
+  overflow:hidden;
+  scroll-snap-align:center;
+  cursor:pointer;
+  transform:scale(.94);
+  opacity:.62;
+  transition:transform .36s cubic-bezier(.2,.8,.2,1),opacity .36s ease,filter .36s ease;
+  filter:saturate(.8);
+}
+.scene-card.on{transform:scale(1);opacity:1;filter:saturate(1.04)}
+.scene-card img,.scene-fallback{width:100%;height:100%;object-fit:cover;display:block}
+.scene-fallback{display:grid;place-items:center;text-align:center;padding:22px;background:linear-gradient(135deg,var(--c1),var(--c2))}
+.scene-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 34%,rgba(6,16,12,.86) 100%);
+}
+.scene-text{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:18px}
+.scene-text h3{font-size:24px;line-height:1.05;font-weight:900;letter-spacing:-.03em}
+.scene-text p{margin-top:6px;font-size:12px;line-height:1.45;color:rgba(255,255,255,.68)}
+.badge{display:inline-flex;margin-top:10px;padding:5px 10px;background:rgba(255,255,255,.16);font-size:11px;font-weight:800}
+.progress{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:0 18px 18px;
+  color:rgba(255,255,255,.45);
+  font-size:11px;
+}
+.bar{height:2px;flex:1;background:rgba(255,255,255,.12);overflow:hidden}
+.bar i{display:block;height:100%;width:14%;background:#fff;transition:transform .25s ease,width .25s ease}
+
+/* Benefits */
+#s4{
+  grid-template-rows:auto auto auto 1fr auto;
+  gap:10px;
+  background:
+    radial-gradient(640px 520px at 78% 14%,rgba(208,182,139,.2),transparent 60%),
+    radial-gradient(620px 520px at 10% 88%,rgba(111,168,197,.13),transparent 58%),
+    linear-gradient(165deg,#2a2119 0%,#8b5e3c 48%,#3b2b1f 100%);
+}
+#s4 .section-title{font-size:clamp(28px,8vw,48px)}
+.subcopy{font-size:13px;line-height:1.8;color:rgba(255,255,255,.72);font-weight:400}
+.tabs{display:flex;gap:7px;flex-wrap:wrap}
+.tabs button{
+  min-height:32px;
+  padding:0 12px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.08);
+  color:rgba(255,255,255,.68);
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+}
+.tabs button.on{background:rgba(255,255,255,.22);color:#fff;border-color:rgba(255,255,255,.34)}
+.count-line{font-size:11px;color:rgba(255,255,255,.56);min-height:18px}
+.benefit-list{
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding-right:2px;
+  scrollbar-width:none;
+}
+.benefit{
+  position:relative;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:10px;
+  align-items:center;
+  min-height:46px;
+  padding:9px 10px;
+  background:rgba(255,255,255,.2);
+  color:#fff;
+  cursor:pointer;
+  transition:transform .18s ease,background .18s ease,opacity .25s ease;
+}
+.benefit.more{padding-right:28px}
+.benefit:active{transform:scale(.985);background:rgba(255,255,255,.28)}
+.benefit.hide{display:none}
+.benefit.fade{animation:itemIn .32s ease both}
+@keyframes itemIn{from{opacity:0;transform:translateY(8px)}}
+.benefit .icon{font-size:17px;width:20px;text-align:center}
+.benefit .name{min-width:0;font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.benefit .meta{display:flex;align-items:flex-end;gap:6px;white-space:nowrap}
+.benefit .free{font-size:12px;font-weight:900;color:#fff}
+.benefit .old{font-size:10px;color:rgba(255,255,255,.46);text-decoration:line-through}
+.benefit.more::after{
+  content:"";
+  position:absolute;
+  right:11px;
+  top:50%;
+  width:6px;
+  height:6px;
+  border-top:1.5px solid rgba(255,255,255,.7);
+  border-right:1.5px solid rgba(255,255,255,.7);
+  transform:translateY(-50%) rotate(45deg);
+  transition:transform .18s ease,border-color .18s ease;
+}
+.urgency{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding-top:8px;
+  border-top:1px solid rgba(255,255,255,.16);
+  font-size:11px;
+  color:rgba(255,255,255,.7);
+}
+.urgency b{color:#fff;font-weight:900}
+
+/* CTA */
+#s5{
+  align-content:center;
+  gap:18px;
+  background:
+    radial-gradient(720px 520px at 24% 18%,rgba(111,168,197,.16),transparent 60%),
+    radial-gradient(520px 500px at 86% 84%,rgba(139,94,60,.22),transparent 60%),
+    linear-gradient(172deg,#07100c 0%,#16261e 48%,#050c09 100%);
+}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(255,255,255,.1)}
+.step{
+  min-height:112px;
+  padding:14px 8px;
+  background:rgba(255,255,255,.045);
+  cursor:pointer;
+  transition:background .18s ease,transform .18s ease;
+}
+.step:active{background:rgba(255,255,255,.1);transform:translateY(1px)}
+.step i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--green);font-style:normal;font-size:11px;font-weight:900}
+.step b{display:block;margin-top:14px;font-size:14px}
+.step span{display:block;margin-top:5px;font-size:10px;line-height:1.5;color:rgba(255,255,255,.44)}
+.contact{
+  padding:18px 0;
+  border-top:1px solid rgba(255,255,255,.12);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  display:grid;
+  justify-items:center;
+  gap:11px;
+  text-align:center;
+}
+.contact small{font-size:11px;color:rgba(255,255,255,.44)}
+.phone{
+  color:#fff;
+  text-decoration:none;
+  font-size:clamp(30px,9vw,46px);
+  line-height:1;
+  font-weight:900;
+  letter-spacing:-.04em;
+}
+.mini-cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:0 20px;
+  background:#fff;
+  color:var(--deep);
+  text-decoration:none;
+  font-size:12px;
+  font-weight:900;
+}
+.notice{text-align:center;font-size:11px;line-height:1.75;color:rgba(255,255,255,.38)}
+.notice b{color:rgba(255,255,255,.72)}
+
+/* Inline benefit detail */
+.benefit.open{
+  background:rgba(255,255,255,.3);
+}
+.benefit.open::after{
+  transform:translateY(-50%) rotate(135deg);
+}
+.inline-detail{
+  margin:-2px 0 6px;
+  padding:4px 12px 8px 42px;
+  background:rgba(255,255,255,.13);
+  border-left:2px solid rgba(255,255,255,.42);
+  animation:detailIn .24s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes detailIn{from{opacity:0;transform:translateY(-8px);filter:blur(4px)}}
+.inline-title{
+  padding:6px 0 2px;
+  font-size:12px;
+  font-weight:900;
+  color:#fff;
+}
+.detail-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.detail-row:last-child{border-bottom:0}
+.detail-main{display:flex;align-items:center;gap:10px;min-width:0}
+.detail-main i{font-style:normal;font-size:17px}
+.detail-main span{font-size:13px;line-height:1.45;color:rgba(255,255,255,.86)}
+.detail-side{font-size:12px;font-weight:900;color:#fff;white-space:nowrap}
+
+@media(max-width:420px){
+  .S{padding-left:14px;padding-right:14px}
+  .nav{left:10px;right:10px}
+  .brand-dot span{display:none}
+  .hero-bottom{align-items:stretch;flex-direction:column}
+  .hero-actions .pill{flex:1}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .scene-card{flex-basis:82vw;height:58vh}
+  .benefit{grid-template-columns:auto 1fr auto;padding:8px 9px}
+  .benefit.more{padding-right:28px}
+  .benefit .name{font-size:11px}
+  .steps{gap:0}
+  .step{min-height:100px;padding:12px 6px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none;filter:none}
+}
+</style>
 </head>
 <body>
-    <div class="h5-wrap">
-        <!-- 页面容器 共10页 -->
-        <div class="page-container" id="pageBox">
-            <!-- 第1页 封面页 -->
-            <div class="page page1">
-                <h1 class="main-title">呼和浩特文旅惠民卡</h1>
-                <p class="sub-title">一卡在手 · 畅游青城</p>
-                <p class="desc-text" style="color:#fff;">全年免票畅玩，省钱又省心</p>
-            </div>
-
-            <!-- 第2页 产品简介-政策背景 -->
-            <div class="page page2">
-                <h2 class="main-title" style="color:var(--green); font-size:26px;">政府惠民工程 官方倾力打造</h2>
-                <p class="desc-text">本惠民卡由<span class="strong-text">呼和浩特市政府批准</span></p>
-                <p class="desc-text">四大部门联合推动：</p>
-                <p class="desc-text strong-text">呼和浩特市文旅广电局</p>
-                <p class="desc-text strong-text">呼和浩特市总工会</p>
-                <p class="desc-text strong-text">呼和浩特市人社局</p>
-                <p class="desc-text strong-text">呼和浩特市工商联</p>
-                <p class="desc-text">正规惠民项目，靠谱有保障！</p>
-            </div>
-
-            <!-- 第3页 产品简介-覆盖范围 -->
-            <div class="page page3">
-                <h2 class="main-title" style="color:var(--blue); font-size:26px;">横跨四城 玩转全域文旅</h2>
-                <p class="desc-text">一卡通覆盖<span class="strong-text">呼、包、鄂、乌兰察布</span>四大城市</p>
-                <p class="desc-text">囊括<span class="strong-text">近40家A级景区</span></p>
-                <p class="desc-text">配套影院、温泉、特色文旅体验项目</p>
-                <p class="desc-text">一站式解锁草原风情与塞外风光</p>
-            </div>
-
-            <!-- 第4页 核心权益展示 -->
-            <div class="page page4">
-                <h2 class="main-title" style="color:var(--gold); font-size:26px;">四大核心权益</h2>
-                <p class="desc-text strong-text">总价值超3000元</p>
-                <div class="card-box">
-                    <div class="card">
-                        <p class="strong-text">免票入园</p>
-                        <p>近40家景区不限次游玩</p>
-                    </div>
-                    <div class="card">
-                        <p class="strong-text">影院折扣</p>
-                        <p>合作影院专享优惠</p>
-                    </div>
-                    <div class="card">
-                        <p class="strong-text">休闲体验</p>
-                        <p>温泉、玩乐全线让利</p>
-                    </div>
-                    <div class="card">
-                        <p class="strong-text">亲子研学</p>
-                        <p>非遗、户外趣味项目</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 第5页 适用人群推荐 -->
-            <div class="page page5">
-                <h2 class="main-title" style="color:var(--gold); font-size:26px;">全民适配 人人都能用</h2>
-                <p class="desc-text">✅ 本地市民：遛娃、周末休闲好去处</p>
-                <p class="desc-text">✅ 上班族：短途出游，解压放松</p>
-                <p class="desc-text">✅ 学生党：研学旅行，高性价比</p>
-                <p class="desc-text">✅ 外地游客：一卡通行畅游塞外</p>
-            </div>
-
-            <!-- 第6页 使用规则总览 -->
-            <div class="page page6">
-                <h2 class="main-title" style="color:var(--green); font-size:26px;">规则简明 使用无忧</h2>
-                <p class="desc-text">📌 激活之日起 <span class="strong-text">365天全年有效</span></p>
-                <p class="desc-text">📌 实行 <span class="strong-text">实名制</span>，仅限本人使用</p>
-                <p class="desc-text">📌 持卡不限游玩次数，使用灵活自由</p>
-            </div>
-
-            <!-- 第7页 使用指南 -->
-            <div class="page page7">
-                <h2 class="main-title" style="color:var(--blue); font-size:26px;">三种入园方式 简单易操作</h2>
-                <p class="desc-text">1. <span class="strong-text">刷身份证入园</span>：闸机直接刷证通行</p>
-                <p class="desc-text">2. <span class="strong-text">微信扫码入园</span>：扫描景区入园码</p>
-                <p class="desc-text">3. <span class="strong-text">小程序刷码</span>：智游青城出示二维码</p>
-            </div>
-
-            <!-- 第8页 办理引导 + 表单组件 -->
-            <div class="page page8">
-                <h2 class="main-title" style="color:var(--gold); font-size:26px;">三步快速办理</h2>
-                <p class="desc-text">1. 微信搜索【智游青城】小程序</p>
-                <p class="desc-text">2. 进入「文旅一卡通」入口</p>
-                <p class="desc-text">3. 完成实名激活即可使用</p>
-
-                <!-- 表单 加分项 -->
-                <div class="form-item">
-                    <input type="text" id="username" placeholder="请输入姓名" required>
-                </div>
-                <div class="form-item">
-                    <input type="tel" id="phone" placeholder="请输入手机号码" required>
-                </div>
-                <button class="btn" onclick="submitForm()">立即办理</button>
-            </div>
-
-            <!-- 第9页 客服&问答 + 分享组件 -->
-            <div class="page page9">
-                <h2 class="main-title" style="color:var(--green); font-size:26px;">答疑解惑 服务相伴</h2>
-                <p class="desc-text strong-text">📞 官方热线：400-071-0471</p>
-                <p class="desc-text">Q：外地游客可以办理吗？</p>
-                <p class="desc-text">A：全国游客无地域限制，均可办理</p>
-                <p class="desc-text">Q：有效期多久？</p>
-                <p class="desc-text">A：激活后365天有效，实名使用</p>
-                <button class="btn" onclick="shareFun()">分享好友</button>
-            </div>
-
-            <!-- 第10页 封底 版权页 -->
-            <div class="page page10">
-                <h2 class="main-title" style="color:var(--gold); font-size:24px;">联合推动单位</h2>
-                <p class="desc-text" style="color:#ccc;">市文旅广电局、总工会、人社局、工商联</p>
-                <p class="desc-text" style="color:#ccc;">监制：内蒙古旅游行业协会</p>
-                <p class="desc-text" style="color:#ccc;">运营：内蒙古智慧文旅有限公司</p>
-                <p class="desc-text" style="margin-top:60px; color:#999;">© 2026 呼和浩特文旅惠民卡 版权所有</p>
-            </div>
-        </div>
-
-        <!-- 分页小圆点 -->
-        <div class="page-dot" id="dotBox"></div>
+<div class="V" id="view">
+  <section class="S" id="s1">
+    <div class="hero-copy">
+      <div class="eyebrow reveal"><i></i>官方惠民 · 一卡游青城</div>
+      <h1 class="reveal delay-1">呼和浩特文旅惠民卡</h1>
+      <p class="lead reveal delay-2">200 元办一年，覆盖呼包鄂乌，景区、影城、温泉、生活服务一次打通。</p>
     </div>
+    <div class="hero-bottom reveal delay-3">
+      <div class="price"><b>200</b><span>元 / 年</span><div class="value-note">近 20,000 元权益，日均约 0.55 元</div></div>
+      <div class="hero-actions">
+        <a class="pill ghost tap js-jump" href="#s4">看权益</a>
+        <a class="pill primary tap js-jump" href="#s5">去办理</a>
+      </div>
+    </div>
+  </section>
 
-    <!-- 背景音乐 -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    
+  <section class="S" id="s2">
+    <h2 class="section-title reveal">四部门联合推动</h2>
+    <p class="official-line reveal delay-1">呼和浩特市政府批准，文旅广电局、总工会、人社局、工商联联合推动的政府惠民项目。</p>
+    <div class="dept-row reveal delay-2">
+      <span>文旅广电局</span><span>总工会</span><span>人社局</span><span>工商联</span><span>内蒙古旅游行业协会监制</span>
+    </div>
+    <div class="stats reveal delay-3">
+      <div><b>44</b><span>合作商户</span></div>
+      <div><b>4</b><span>覆盖城市</span></div>
+      <div><b>12万+</b><span>在册用户</span></div>
+      <div><b>98%</b><span>好评率</span></div>
+    </div>
+  </section>
 
-    <script>
-        // 全局变量
-        const pageBox = document.getElementById('pageBox');
-        const dotBox = document.getElementById('dotBox');
-        const pageNum = 10; // 总页数
-        let currentPage = 0;
-        const music = document.getElementById('bgMusic');
-        music.volume = 0.3; // 音量30% 符合要求
+  <section class="S" id="s3">
+    <div class="s3-head">
+      <h2>精选权益场景</h2>
+      <span>左右滑动 · 点击查看</span>
+    </div>
+    <div class="rail" id="sceneRail" aria-label="景区权益横向滑动">
+      <article class="scene-card" data-title="白石生态" data-info="山林徒步 · 免票 12 次">
+        <img src="https://s41.ax1x.com/2026/06/10/pmudwX8.webp" alt="白石生态山林风光" loading="lazy">
+        <div class="scene-text"><h3>白石生态</h3><p>山林徒步，适合周末亲子和轻户外。</p><span class="badge">免票 12 次</span></div>
+      </article>
+      <article class="scene-card" data-title="库布其沙漠" data-info="含观光车 · 免票 12 次">
+        <img src="https://s41.ax1x.com/2026/06/10/pmudUpt.webp" alt="库布其沙漠沙丘" loading="lazy">
+        <div class="scene-text"><h3>库布其沙漠</h3><p>响沙奇观，含观光车权益。</p><span class="badge">免票 12 次</span></div>
+      </article>
+      <article class="scene-card" data-title="老牛湾" data-info="黄河峡谷 + 长城交汇 · 免票 3 次">
+        <img src="https://s41.ax1x.com/2026/06/20/pmGF7mq.webp" alt="老牛湾黄河峡谷" loading="lazy">
+        <div class="scene-text"><h3>老牛湾</h3><p>黄河大峡谷与长城交汇，地域识别度最强。</p><span class="badge">免票 3 次</span></div>
+      </article>
+      <article class="scene-card" data-title="大召寺" data-info="藏传佛教圣地 · 免票 2 次">
+        <img src="https://s41.ax1x.com/2026/06/10/pmudtfI.webp" alt="大召寺建筑细节" loading="lazy">
+        <div class="scene-text"><h3>大召寺</h3><p>青城代表性人文地标，银佛寺经典线路。</p><span class="badge">免票 2 次</span></div>
+      </article>
+      <article class="scene-card" data-title="奥际影城" data-info="五店通用 · 法定节假日不可用">
+        <div class="scene-fallback" style="--c1:#111f16;--c2:#4b3a22"><div><h3>奥际影城</h3><p>五店通用 · 杜比全景声</p><span class="badge">免票 3 次</span></div></div>
+      </article>
+    </div>
+    <div class="progress"><span id="sceneIndex">01 / 05</span><div class="bar"><i id="sceneBar"></i></div><span>呼包鄂乌</span></div>
+  </section>
 
-        // 生成分页指示器
-        for(let i = 0; i < pageNum; i++){
-            let dot = document.createElement('div');
-            dot.className = 'dot';
-            if(i === 0) dot.classList.add('active');
-            dotBox.appendChild(dot);
-        }
-        const dots = document.querySelectorAll('.dot');
+  <section class="S" id="s4">
+    <div>
+      <h2 class="section-title reveal">权益不堆料，只看高频</h2>
+      <p class="subcopy reveal delay-1">分类只负责筛选；有多店、多规则、需预约的项目，点击项目看详情。</p>
+    </div>
+    <div class="tabs reveal delay-2" id="tabs">
+      <button class="tap on" data-cat="all">全部</button>
+      <button class="tap" data-cat="life">生活</button>
+      <button class="tap" data-cat="fun">娱乐</button>
+      <button class="tap" data-cat="study">研学</button>
+    </div>
+    <div class="count-line" id="countLine"></div>
+    <div class="benefit-list reveal delay-3" id="benefitList">
+      <div class="benefit more" data-cat="life" data-detail="wash"><span class="icon">🚗</span><span class="name">万达信洗车服务（两店通用）</span><span class="meta"><b class="free">免 2 次</b><em class="old">58 元</em></span></div>
+      <div class="benefit" data-cat="life" data-toast="威尔浪优惠券 · 免 2 张 · 原价 150 元"><span class="icon">🏷</span><span class="name">威尔浪优惠券</span><span class="meta"><b class="free">免 2 张</b><em class="old">150 元</em></span></div>
+      <div class="benefit" data-cat="life" data-toast="特色茶饮驿站 · 免 3 次 · 原价 36 元"><span class="icon">🍵</span><span class="name">特色茶饮驿站</span><span class="meta"><b class="free">免 3 次</b><em class="old">36 元</em></span></div>
+      <div class="benefit more" data-cat="fun" data-detail="cinema"><span class="icon">🎬</span><span class="name">奥际影城（五店通用）</span><span class="meta"><b class="free">免 3 次</b><em class="old">70 元</em></span></div>
+      <div class="benefit more" data-cat="fun" data-detail="hotSpring"><span class="icon">♨</span><span class="name">哈素海天鹅堡温泉</span><span class="meta"><b class="free">免 3 次</b><em class="old">189 元</em></span></div>
+      <div class="benefit" data-cat="fun" data-toast="幻影星空 VR 主题乐园 · 免 2 次 · 原价 38 元"><span class="icon">🥽</span><span class="name">幻影星空 VR 主题乐园</span><span class="meta"><b class="free">免 2 次</b><em class="old">38 元</em></span></div>
+      <div class="benefit more" data-cat="fun" data-detail="netbar"><span class="icon">💻</span><span class="name">七舰队网咖（九店通用）</span><span class="meta"><b class="free">免 2 次</b><em class="old">2h 门市价</em></span></div>
+      <div class="benefit more" data-cat="fun" data-detail="yoga"><span class="icon">🧘</span><span class="name">悠季瑜伽（四店通用）</span><span class="meta"><b class="free">免 2 次</b><em class="old">99 元</em></span></div>
+      <div class="benefit" data-cat="fun" data-toast="云都台球 · 2 小时 · 免 2 次 · 原价 72 元"><span class="icon">🎱</span><span class="name">云都台球（2 小时）</span><span class="meta"><b class="free">免 2 次</b><em class="old">72 元</em></span></div>
+      <div class="benefit more" data-cat="study" data-detail="oat"><span class="icon">🌾</span><span class="name">三主粮燕麦产业园</span><span class="meta"><b class="free">免 2 次</b><em class="old">120 元</em></span></div>
+      <div class="benefit" data-cat="study" data-toast="南村研学实践基地 · 免 3 次 · 原价 30 元"><span class="icon">📚</span><span class="name">南村研学实践基地</span><span class="meta"><b class="free">免 3 次</b><em class="old">30 元</em></span></div>
+      <div class="benefit" data-cat="study" data-toast="栖迟茶博物馆 · 茶研学 · 免 1 次 · 原价 158 元"><span class="icon">🏛</span><span class="name">栖迟茶博物馆（茶研学）</span><span class="meta"><b class="free">免 1 次</b><em class="old">158 元</em></span></div>
+    </div>
+    <div class="urgency"><span>前 1000 名赠奶食礼包 · 剩余 <b id="quota">126</b> 份</span><span><b id="viewer">38</b> 人正在浏览</span></div>
+  </section>
 
-        // 滑动翻页（鼠标/触屏上下滑动）
-        let startY = 0;
-        document.querySelector('.h5-wrap').addEventListener('touchstart', e=>{
-            startY = e.touches[0].clientY;
-        })
-        document.querySelector('.h5-wrap').addEventListener('touchend', e=>{
-            let endY = e.changedTouches[0].clientY;
-            let diff = startY - endY;
-            if(diff > 50 && currentPage < pageNum - 1){
-                currentPage++;
-                changePage();
-            }else if(diff < -50 && currentPage > 0){
-                currentPage--;
-                changePage();
-            }
-        })
+  <section class="S" id="s5">
+    <h2 class="section-title reveal">30 秒购卡，全年可用</h2>
+    <div class="steps reveal delay-1">
+      <div class="step tap" data-toast="打开微信小程序，首页点击「惠民卡办理」"><i>1</i><b>购卡</b><span>微信小程序 30 秒完成</span></div>
+      <div class="step tap" data-toast="购卡后进入「我的惠民卡」，填写姓名和身份证号激活"><i>2</i><b>激活</b><span>实名信息提交后生效</span></div>
+      <div class="step tap" data-toast="到店打开「扫码入园」，机器或人工均可核销"><i>3</i><b>核销</b><span>扫码入园，随到随玩</span></div>
+    </div>
+    <div class="contact reveal delay-2">
+      <small>24 小时客服热线 · 全国可打</small>
+      <a class="phone tap" href="tel:400-071-0471">400-071-0471</a>
+      <a class="mini-cta tap js-jump" href="#s4">再看一遍核心权益</a>
+    </div>
+    <p class="notice reveal delay-3">微信搜索 <b>「呼和浩特文旅惠民卡」</b> 小程序办理。激活后 365 天有效，具体权益以小程序展示为准。</p>
+  </section>
+</div>
 
-        // 切换页面
-        function changePage(){
-            pageBox.style.transform = `translateY(-${currentPage * 667}px)`;
-            // 更新指示器
-            dots.forEach((item,index)=>{
-                item.classList.remove('active');
-                if(index === currentPage) item.classList.add('active');
-            })
-        }
+<nav class="nav" id="nav">
+  <div class="brand-dot"><i></i><span>文旅惠民卡</span></div>
+  <div class="nav-links">
+    <a href="#s1" class="js-jump on">首页</a>
+    <a href="#s2" class="js-jump">背书</a>
+    <a href="#s3" class="js-jump">场景</a>
+    <a href="#s4" class="js-jump">权益</a>
+    <a href="#s5" class="js-jump">办理</a>
+  </div>
+</nav>
+<button class="music tap" id="musicBtn" aria-label="播放或暂停背景音乐">♪</button>
+<div class="hint" id="hint"><i></i><span>上滑</span></div>
+<div class="toast" id="toast"></div>
+<audio id="bgm" src="music.mp3" loop preload="none"></audio>
 
-        // 表单提交（加分组件）
-        function submitForm(){
-            let name = document.getElementById('username').value.trim();
-            let phone = document.getElementById('phone').value.trim();
-            if(!name || !phone){
-                alert('请填写完整姓名和手机号！');
-                return;
-            }
-            alert('提交成功！即将跳转客服页面');
-            currentPage = 8; // 跳转到第9页
-            changePage();
-        }
+<script>
+const view=document.getElementById("view");
+const sections=[...document.querySelectorAll(".S")];
+const nav=document.getElementById("nav");
+const hint=document.getElementById("hint");
+const toast=document.getElementById("toast");
+const bgm=document.getElementById("bgm");
+const musicBtn=document.getElementById("musicBtn");
+const details={
+  wash:{title:"万达信洗车服务（两店通用）",items:[["🚗","万达信一店","免 1 次"],["🚗","万达信二店","免 1 次"],["ℹ","合计权益","全年免 2 次，按门店规则核销"]]},
+  cinema:{title:"奥际影城（五店通用）",items:[["🎬","五店通用","免 3 次"],["🔊","杜比全景声","按影城排片使用"],["⚠","使用限制","法定节假日不可用"]]},
+  hotSpring:{title:"哈素海天鹅堡温泉",items:[["♨","天然温泉","免 3 次"],["💰","门市参考","189 元 / 次"],["⚠","开园提醒","预计 11 月开园，以小程序为准"]]},
+  netbar:{title:"七舰队网咖（九店通用）",items:[["💻","九店通用","免 2 次"],["⏱","单次时长","2 小时门市价权益"],["ℹ","核销方式","到店出示小程序二维码"]]},
+  yoga:{title:"悠季瑜伽（四店通用）",items:[["🧘","四店通用","免 2 次"],["💰","门市参考","99 元 / 次"],["ℹ","建议","高峰课时提前联系门店"]]},
+  oat:{title:"三主粮燕麦产业园",items:[["🌾","产业园研学","免 2 次"],["👥","成团要求","10 人成团"],["📞","预约提醒","建议提前 3 天联系商家"]]}
+};
+let current=0,locked=false,toastTimer=null,playing=false,touchY=0,touchX=0,touchTarget=null,wheelSum=0,openDetailKey=null;
 
-        // 分享功能（加分组件）
-        function shareFun(){
-            alert('已唤起分享！可分享至微信好友/朋友圈\n标题：呼和浩特文旅惠民卡，一卡畅游四城！');
-        }
+function setVh(){document.documentElement.style.setProperty("--vh",window.innerHeight+"px")}
+setVh();addEventListener("resize",setVh);
 
-        // 打开自动播放音乐（部分浏览器限制，点击页面即可播放）
-        document.addEventListener('click',()=>{
-            music.play();
-        },{once:true})
-    </script>
+function showToast(text){
+  toast.textContent=text;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toast.classList.remove("show"),1800);
+}
+function goTo(index){
+  const next=Math.max(0,Math.min(sections.length-1,index));
+  if(next===current||locked)return;
+  locked=true;
+  sections[next].scrollIntoView({behavior:"smooth",block:"start"});
+  setTimeout(()=>locked=false,650);
+}
+function syncSection(){
+  let best=0,area=-1;
+  sections.forEach((s,i)=>{
+    const r=s.getBoundingClientRect();
+    const visible=Math.min(r.bottom,innerHeight)-Math.max(r.top,0);
+    if(visible>area){area=visible;best=i}
+  });
+  current=best;
+  sections.forEach((s,i)=>s.classList.toggle("on",i===best));
+  nav.classList.toggle("show",view.scrollTop>innerHeight*.16);
+  hint.classList.toggle("show",view.scrollTop<24);
+  document.querySelectorAll(".nav-links a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+sections[best].id));
+}
+view.addEventListener("scroll",()=>requestAnimationFrame(syncSection),{passive:true});
+setTimeout(syncSection,80);
+
+view.addEventListener("wheel",e=>{
+  const inner=e.target.closest(".benefit-list");
+  if(inner&&canScrollInner(inner,e.deltaY))return;
+  e.preventDefault();
+  wheelSum+=e.deltaY;
+  if(Math.abs(wheelSum)>48){goTo(current+(wheelSum>0?1:-1));wheelSum=0}
+},{passive:false});
+view.addEventListener("touchstart",e=>{touchY=e.touches[0].clientY;touchX=e.touches[0].clientX;touchTarget=e.target},{passive:true});
+view.addEventListener("touchend",e=>{
+  const diff=touchY-e.changedTouches[0].clientY;
+  const dx=touchX-e.changedTouches[0].clientX;
+  if(Math.abs(dx)>Math.abs(diff))return;
+  const inner=touchTarget?.closest?.(".benefit-list");
+  if(inner&&canScrollInner(inner,diff))return;
+  if(Math.abs(diff)>46)goTo(current+(diff>0?1:-1));
+},{passive:true});
+function canScrollInner(el,delta){
+  if(!el||el.scrollHeight<=el.clientHeight+1)return false;
+  if(delta>0)return el.scrollTop+el.clientHeight<el.scrollHeight-1;
+  if(delta<0)return el.scrollTop>1;
+  return false;
+}
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowDown"||e.key===" "){e.preventDefault();goTo(current+1)}
+  if(e.key==="ArrowUp"){e.preventDefault();goTo(current-1)}
+});
+
+document.querySelectorAll(".js-jump").forEach(a=>{
+  a.addEventListener("click",e=>{
+    e.preventDefault();
+    const target=document.querySelector(a.getAttribute("href"));
+    const idx=sections.indexOf(target);
+    if(idx>=0){current=idx;target.scrollIntoView({behavior:"smooth",block:"start"});history.replaceState(null,"",a.getAttribute("href"))}
+  });
+});
+
+const rail=document.getElementById("sceneRail");
+const cards=[...document.querySelectorAll(".scene-card")];
+const sceneIndex=document.getElementById("sceneIndex");
+const sceneBar=document.getElementById("sceneBar");
+function syncScenes(){
+  const center=rail.scrollLeft+rail.clientWidth/2;
+  let best=0,dist=Infinity;
+  cards.forEach((card,i)=>{
+    const cardCenter=card.offsetLeft+card.offsetWidth/2;
+    const d=Math.abs(cardCenter-center);
+    if(d<dist){dist=d;best=i}
+  });
+  cards.forEach((card,i)=>card.classList.toggle("on",i===best));
+  sceneIndex.textContent=String(best+1).padStart(2,"0")+" / "+String(cards.length).padStart(2,"0");
+  sceneBar.style.width=(100/cards.length)+"%";
+  sceneBar.style.transform=`translateX(${best*100}%)`;
+}
+rail.addEventListener("scroll",()=>requestAnimationFrame(syncScenes),{passive:true});
+cards.forEach(card=>{
+  card.addEventListener("click",()=>showToast(`${card.dataset.title} · ${card.dataset.info}`));
+  card.querySelector("img")?.addEventListener("error",()=>{
+    const title=card.dataset.title||"权益场景";
+    card.innerHTML=`<div class="scene-fallback" style="--c1:#173827;--c2:#8b5e3c"><div><h3>${title}</h3><p>${card.dataset.info||"权益持续扩容中"}</p><span class="badge">查看权益</span></div></div>`;
+  },{once:true});
+});
+setTimeout(syncScenes,120);
+document.addEventListener("keydown",e=>{
+  if(current!==2)return;
+  if(e.key==="ArrowLeft")rail.scrollBy({left:-rail.clientWidth*.72,behavior:"smooth"});
+  if(e.key==="ArrowRight")rail.scrollBy({left:rail.clientWidth*.72,behavior:"smooth"});
+});
+
+const tabs=[...document.querySelectorAll("#tabs button")];
+const benefits=[...document.querySelectorAll(".benefit")];
+const countLine=document.getElementById("countLine");
+const catName={all:"全部权益",life:"生活服务",fun:"休闲娱乐",study:"研学团建"};
+function filterBenefits(cat){
+  closeInlineDetail();
+  tabs.forEach(t=>t.classList.toggle("on",t.dataset.cat===cat));
+  let count=0;
+  benefits.forEach((item,i)=>{
+    const show=cat==="all"||item.dataset.cat===cat;
+    item.classList.toggle("hide",!show);
+    item.classList.remove("fade");
+    if(show){count++;setTimeout(()=>item.classList.add("fade"),i*18)}
+  });
+  countLine.textContent=`${catName[cat]} · 当前展示 ${count} 项 · 点击带箭头项目看门店 / 规则`;
+}
+tabs.forEach(btn=>btn.addEventListener("click",()=>filterBenefits(btn.dataset.cat)));
+benefits.forEach(item=>{
+  item.addEventListener("click",()=>{
+    if(item.dataset.detail){toggleDetail(item);return}
+    showToast(item.dataset.toast||item.querySelector(".name").textContent);
+  });
+});
+filterBenefits("all");
+
+function closeInlineDetail(){
+  document.querySelector(".inline-detail")?.remove();
+  benefits.forEach(item=>item.classList.remove("open"));
+  openDetailKey=null;
+}
+function toggleDetail(item){
+  const key=item.dataset.detail;
+  if(openDetailKey===key){closeInlineDetail();return}
+  closeInlineDetail();
+  const data=details[key];
+  if(!data)return;
+  const detail=document.createElement("div");
+  detail.className="inline-detail";
+  detail.innerHTML=`<div class="inline-title">${data.title}</div>${data.items.map(row=>`<div class="detail-row"><div class="detail-main"><i>${row[0]}</i><span>${row[1]}</span></div><div class="detail-side">${row[2]}</div></div>`).join("")}`;
+  item.insertAdjacentElement("afterend",detail);
+  item.classList.add("open");
+  openDetailKey=key;
+  detail.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeInlineDetail()});
+
+document.querySelectorAll("[data-toast]").forEach(el=>el.addEventListener("click",()=>showToast(el.dataset.toast)));
+document.querySelectorAll(".tap").forEach(el=>{
+  el.addEventListener("pointerdown",e=>{
+    const ripple=document.createElement("span");
+    const r=el.getBoundingClientRect();
+    ripple.style.cssText=`position:absolute;left:${e.clientX-r.left}px;top:${e.clientY-r.top}px;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.32);transform:translate(-50%,-50%) scale(1);pointer-events:none;animation:rip .45s ease forwards`;
+    if(getComputedStyle(el).position==="static")el.style.position="relative";
+    el.style.overflow="hidden";
+    el.appendChild(ripple);
+    setTimeout(()=>ripple.remove(),480);
+  });
+});
+const style=document.createElement("style");
+style.textContent="@keyframes rip{to{opacity:0;transform:translate(-50%,-50%) scale(18)}}";
+document.head.appendChild(style);
+
+async function toggleMusic(){
+  try{
+    if(playing){bgm.pause();playing=false;musicBtn.classList.remove("on");showToast("背景音乐已暂停")}
+    else{await bgm.play();playing=true;musicBtn.classList.add("on");showToast("背景音乐已开启")}
+  }catch(err){showToast("浏览器限制自动播放，请再次点击音乐按钮")}
+}
+musicBtn.addEventListener("click",toggleMusic);
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&playing)bgm.pause()});
+
+const quota=document.getElementById("quota");
+const viewer=document.getElementById("viewer");
+let quotaNum=126,viewerNum=38;
+setInterval(()=>{
+  viewerNum=Math.max(31,Math.min(67,viewerNum+Math.floor(Math.random()*5)-2));
+  if(Math.random()>.72&&quotaNum>88)quotaNum-=1;
+  viewer.textContent=viewerNum;
+  quota.textContent=quotaNum;
+},2600);
+</script>
 </body>
 </html>
